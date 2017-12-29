@@ -157,10 +157,23 @@
 			<div flex layout="column" layout-md="row" layout-gt-md="row" class="text-center">
 				<div flex layout="column" layout-gt-xs="row">
 					<div flex>
-						<h4> Hash Rate<h2>{{miner.hash | toHashRate}}</h2></h4>
-					</div>
+						<h5> Hash Rate
+							<h2>
+								{{miner.hash | toHashRate}}
+								<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages['global']['1'] < miner.hash">trending_up</md-icon>									
+								<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages['global']['1'] > miner.hash">trending_down</md-icon>
+								<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages['global']['1'] == miner.hash">trending_flat</md-icon>									
+								<!--
+									<h6>
+								&nbsp;&nbsp;&nbsp;{{minerStats[addr].workerAverages['global']['1'] | toHashRate}}
+								&nbsp;&nbsp;&nbsp;{{minerStats[addr].workerAverages['global']['4'] | toHashRate}}
+									</h6>
+								-->
+							</h2>
+						</h5>
+					</div>					
 					<div flex>
-						<h4> Total Hashes<h2>{{miner.totalHashes | number}}</h2></h4>
+						<h5> Total Hashes<h2>{{miner.totalHashes | number}}</h2></h5>
 					</div>
 				</div>
 				<div flex layout="column" layout-gt-xs="row">
@@ -185,7 +198,9 @@
 						<thead md-head>
 							<tr md-row>
 								<th md-column md-numeric><h2 class="md-subhead">Worker</h2></th>
-								<th md-column md-numeric><h2 class="md-subhead">#'s</h2></th>
+								<th md-column md-numeric><h2 class="md-subhead">Rate</h2></th>
+								<th md-column md-numeric><h2 class="md-subhead">Past Hour</h2></th>
+								<th md-column md-numeric><h2 class="md-subhead">Past 4 Hours</h2></th>
 								<th md-column md-numeric><h2 class="md-subhead">Total #'s</h2></th>
 								<th md-column md-numeric><h2 class="md-subhead">Last Hash</h2></th>
 							</tr>
@@ -194,6 +209,8 @@
 							<tr md-row ng-repeat="(index, id) in addrStats[addr].ids" md-select="id" data-md-on-select="updateCharts" md-on-deselect="updateCharts">
 								<td md-cell><p class="md-body-2">{{id}}</p></td>
 								<td md-cell><p class="md-body-2">{{minerStats[addr].dataset[id][0].hs | toHashRate}}</p></td>
+								<td md-cell><p class="md-body-2">{{minerStats[addr].workerAverages[id]['1'] | toHashRate}}</p></td>
+								<td md-cell><p class="md-body-2">{{minerStats[addr].workerAverages[id]['4'] | toHashRate}}</p></td>
 								<td md-cell><p class="md-body-2">{{addrStats[addr].workerStats[id].totalHash | number}}</p></td>
 								<td md-cell>
 									<span class="md-body-2" am-time-ago="minerStats[addr].dataset[id][0].ts"></span>

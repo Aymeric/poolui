@@ -131,11 +131,27 @@ angular.module('utils.services', [])
       
       dataService.getData("/miner/"+addr+"/chart/hashrate/allWorkers", function(allWorkersData){
           // Convert all dates to object
-
+          var averageHours = [1, 4];
+          var now = new Date();
+          minerStats[addr].workerAverages = {};
           _.each(allWorkersData, function (workerData, mid) {
             for(var i = 0 ; i < workerData.length; i++){
               allWorkersData[mid][i].ts = new Date(allWorkersData[mid][i].ts);
             }
+
+            minerStats[addr].workerAverages[mid] = {};
+            averageHours.forEach(hr => {
+              var total = 0;
+              var count = 0;
+              var lastHour = allWorkersData[mid].filter(function (el) {
+                  return now - el.ts < hr * 60 * 60 * 1000;
+              });
+              for(var i = 0 ; i < lastHour.length; i++){
+                total += lastHour[i].hs;
+                count++;
+              }
+              minerStats[addr].workerAverages[mid][hr] = Math.round(total / count);                
+            }); 
 
             minerStats[addr].dataset[mid] = workerData;
 
@@ -154,10 +170,10 @@ angular.module('utils.services', [])
                 }
               }], 'id');
           });
-
+          
           // only display selected miners
-          var selected = minerStats[addr].selected;
-          if(minerStats[addr].table_selected.length < 1) {
+          var selected = ['global'];
+          if(minerStats[addr].table_selected.length > 0) {
             selected = _.union(minerStats[addr].table_selected, ['global']);
           }
           
