@@ -76,6 +76,8 @@ var app = angular.module('poolui', [
 		$scope.GLOBALS = GLOBALS;
 		var appCache = window.applicationCache;
 		$scope.$storage = $localStorage;
+		if ($scope.$storage.current_pool == null)
+			$scope.$storage.current_pool = GLOBALS.pools[0].api_url;
 
 		$scope.poolList = ["pplns", "pps", "solo"];
 		$scope.poolStats = {}; // All Pool stats
@@ -91,6 +93,13 @@ var app = angular.module('poolui', [
 		$scope.globalSiren = false;
 		$scope.sirenAudio = ngAudio.load("assets/ding.wav");
 		
+		$scope.changeApi = function () {
+			dataService.setApiUrl();
+			loadOnce();
+			loadData();
+			update();
+			//this.updateHashRate($scope.addrStats);
+		}
 		// Update global hashrate and set off alarm if any of the tracked addresses fall below the threshold
 		var updateHashRate = function (addrStats){
 			var totalHashRate = 0;
@@ -114,8 +123,8 @@ var app = angular.module('poolui', [
 		$scope.close = function () {
             $mdSidenav('left').close();
 
-		};
-		
+        };
+
 		// ------- UI HELPERS
 
 		$scope.menuOpen = $mdMedia('gt-md');

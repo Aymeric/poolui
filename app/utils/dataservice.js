@@ -1,10 +1,19 @@
 angular.module('utils.xhr', [])
 .service('dataService', function($http, $localStorage, $sessionStorage, GLOBALS) {
-  var apiURL = GLOBALS.api_url;
+  //var apiURL = GLOBALS.api_url;
+  var apiURL = GLOBALS.pools[0].api_url;
   var sessStorage = $sessionStorage;
   var storage = $localStorage;
   var sessionLock = false;
-  
+
+  this.setApiUrl = function () {
+    if (storage.current_pool != null) {
+      //alert(storage.current_pool);
+      apiURL = storage.current_pool;
+    }      
+  }
+  this.setApiUrl();
+
   this.getData = function(url, successFn, errorFn) {
     this.xhr('GET', url, {}, successFn, errorFn);
   }

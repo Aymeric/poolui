@@ -28,7 +28,7 @@
       <div class="container" layout="row" flex>
         <md-sidenav md-is-locked-open="menuClose" md-component-id="left" md-whiteframe="4" class="sidenav">
           <md-toolbar class="logo">
-            <h1 class="md-toolbar-tools">XMRPool.net <i class="md-caption">beta</i></h1>
+            <h1 class="md-toolbar-tools">poolui <i class="md-caption">v2</i></h1>
           </md-toolbar>
           <md-list>
             <md-list-item>
@@ -90,7 +90,7 @@
           <div class="power text-center md-subhead"  layout="row" layout-align="center end"> 
             <div flex>
             Powered by <a href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a> 
-            <br/>& <br/><a class="alt" href="https://github.com/Aymeric/poolui" target="_new">pooluiv2</a> forked from <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
+            <br/>& <br/><a class="alt" href="https://github.com/Aymeric/poolui" target="_new">poolui v2</a> forked from <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
             <br/>
             MIT Licence
             <br/>
@@ -104,8 +104,18 @@
               <md-icon md-font-set="material-icons">menu</md-icon>
             </md-button>
             <h3 flex><a href="#/dashboard">Network : <b>{{network.difficulty | difficultyToHashRate | toHashRate}}</b></a></h3>
-            <h3 flex><a href="#/dashboard">Pool : <b>{{poolStats.global.hashRate | toHashRate}}</b></a></h3>
+            <h3 flex>  
+              <a href="#/dashboard">
+                Pool :
+               <b>{{poolStats.global.hashRate | toHashRate}}</b></a>
+              </h3>
             <h3 flex><a href="#/dashboard">You : <b>{{yourTotalHashRate | toHashRate}}</b></a></h3>
+            <md-input-container>
+              <md-select ng-model="$storage.current_pool" ng-change="changeApi()">
+                  <!--<md-select-header>Change pool:</md-select-header>-->
+                  <md-option ng-value="opt.api_url" ng-repeat="opt in GLOBALS.pools">{{ opt.name }}</md-option>
+              </md-select>
+            </md-input-container>
             <div>
               <md-button class="md-raised md-accent" aria-label="Miner Login" ng-click="minerLogin($event)" ng-if="!isLoggedIn()">
                 <md-icon class="login">fingerprint</md-icon>
@@ -114,7 +124,7 @@
               <md-button class="md-fab md-mini md-warn" aria-label="Miner Login" ng-click="minerConsole($event)" ng-if="isLoggedIn()">
                 <md-icon class="login">build</md-icon>
               </md-button>
-            </div>
+            </div>        
           </div>
         </md-toolbar>
       <md-content flex id="main" style="margin-top: 64px !important;">
