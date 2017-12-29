@@ -9,7 +9,7 @@
 						</div>
 					</md-card-title-media>
 					<md-card-title-text>
-						<span class="md-headline">{{poolStats.global.totalHashes | number}}</span>
+						<span class="md-headline">{{poolStats.global.totalHashes | toNumberAbbreviated}}</span>
 						<span class="md-subhead">Hashes Accepted</span>
 					</md-card-title-text>
 				</md-card-title>
@@ -24,19 +24,23 @@
 						</div>
 					</md-card-title-media>
 					<md-card-title-text>
-						<div class="md-headline">{{poolStats.global.totalBlocksFound}}</div>
-						<div class="md-subhead">
-							<span>Blocks Found (<span am-time-ago="poolStats.global.lastBlockFoundTime*1000"></span>)
+						<div class="md-headline">
+							{{poolStats.global.totalBlocksFound}}
 							<md-tooltip md-direction="bottom">
-						    	{{poolStats.global.lastBlockFoundTime*1000 | date:'hh:mm:ss dd/MM/yy'}}
-						     </md-tooltip>
+								<span am-time-ago="poolStats.global.lastBlockFoundTime*1000"></span> at {{poolStats.global.lastBlockFoundTime*1000 | date:'hh:mm:ss dd/MM/yy'}}
+							</md-tooltip>								
+						</div>
+						<div class="md-subhead">
+							<span>Blocks Found
 						</div>
 					</md-card-title-text>
 				</md-card-title>
 			</md-card>
 		</div>
+		<!--
 	</div>
 	<div layout="column" layout-gt-sm="row" flex>
+	-->
 		<div layout="column" flex>
 			<md-card class="metric">
 				<md-card-title>
@@ -53,7 +57,7 @@
 			</md-card>
 		</div>
 		<div layout="column" flex>
-			<md-card class="metric">
+			<md-card class="metric" href="#/payments">
 				<md-card-title>
 					<md-card-title-media>
 						<div class="md-media-sm card-media" layout="row" layout-align="center center">
@@ -61,8 +65,13 @@
 						</div>
 					</md-card-title-media>
 					<md-card-title-text>
-						<span class="md-headline">{{poolStats.global.totalMinersPaid}}</span>
-						<span class="md-subhead">Miners Paid <a href="#/payments">({{poolStats.global.totalPayments}} Payments)</a></span>
+						<span class="md-headline">
+							{{poolStats.global.totalMinersPaid}}
+							<md-tooltip md-direction="bottom">
+								{{poolStats.global.totalPayments}} Payments
+							</md-tooltip>								
+						</span>
+						<span class="md-subhead">Miners Paid</span>
 					</md-card-title-text>
 
 				</md-card-title>

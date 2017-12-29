@@ -111,6 +111,11 @@ var app = angular.module('poolui', [
 			($scope.globalSiren) ? $scope.sirenAudio.play() : $scope.sirenAudio.stop();
 		}
 
+		$scope.close = function () {
+            $mdSidenav('left').close();
+
+		};
+		
 		// ------- UI HELPERS
 
 		$scope.menuOpen = $mdMedia('gt-md');

@@ -26,61 +26,61 @@
       <![endif]-->
 
       <div class="container" layout="row" flex>
-        <md-sidenav md-is-locked-open="menuOpen" md-component-id="left" md-whiteframe="4" class="sidenav">
+        <md-sidenav md-is-locked-open="menuClose" md-component-id="left" md-whiteframe="4" class="sidenav">
           <md-toolbar class="logo">
             <h1 class="md-toolbar-tools">XMRPool.net <i class="md-caption">beta</i></h1>
           </md-toolbar>
           <md-list>
             <md-list-item>
-              <md-button href="#/home" ng-class="isActivePage('home')">
+              <md-button href="#/home" ng-click="close()" ng-class="isActivePage('home')">
                 <md-icon md-font-set="material-icons" class="menu-item">home</md-icon>
                 Home
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/dashboard" ng-class="isActivePage('dashboard')">
+              <md-button href="#/dashboard" ng-click="close()" ng-class="isActivePage('dashboard')">
                 <md-icon md-font-set="material-icons" class="menu-item">dashboard</md-icon>
                 Dashboard
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/blocks" ng-class="isActivePage('blocks')">
+              <md-button href="#/blocks" ng-click="close()" ng-class="isActivePage('blocks')">
                 <md-icon md-font-set="material-icons" class="menu-item">reorder</md-icon>
                 Blocks
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/payments" ng-class="isActivePage('payments')">
+              <md-button href="#/payments" ng-click="close()" ng-class="isActivePage('payments')">
                 <md-icon md-font-set="material-icons" class="menu-item">payments</md-icon>
                 Payment
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/ports" ng-class="isActivePage('ports')">
+              <md-button href="#/ports" ng-click="close()" ng-class="isActivePage('ports')">
                 <md-icon md-font-set="material-icons" class="menu-item">flight_land</md-icon>
                 Ports
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/network" ng-class="isActivePage('network')">
+              <md-button href="#/network" ng-click="close()" ng-class="isActivePage('network')">
                 <md-icon md-font-set="material-icons" class="menu-item">language</md-icon>
                 Network
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/help/chat" ng-class="isActivePage('support')">
+              <md-button href="#/help/chat" ng-click="close()" ng-class="isActivePage('support')">
                 <md-icon md-font-set="material-icons" class="menu-item">group</md-icon>
                 Support
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/help/getting_started" ng-class="isActivePage('help/getting_started')">
+              <md-button href="#/help/getting_started" ng-click="close()" ng-class="isActivePage('help/getting_started')">
                 <md-icon md-font-set="material-icons" class="menu-item">launch</md-icon>
                 Getting Started
               </md-button>
             </md-list-item>
             <md-list-item>
-              <md-button href="#/help/faq" ng-class="isActivePage('help/faq')">
+              <md-button href="#/help/faq" ng-click="close()" ng-class="isActivePage('help/faq')">
                 <md-icon md-font-set="material-icons" class="menu-item">help_outline</md-icon>
                 FAQ
               </md-button>
@@ -89,33 +89,35 @@
           <div flex></div>
           <div class="power text-center md-subhead"  layout="row" layout-align="center end"> 
             <div flex>
-            Powered by <a href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a> & <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
+            Powered by <a href="https://github.com/Snipa22/nodejs-pool" target="_new">nodejs-pool</a> 
+            <br/>& <br/><a class="alt" href="https://github.com/Aymeric/poolui" target="_new">pooluiv2</a> forked from <a class="alt" href="https://github.com/mesh0000/poolui" target="_new">poolui</a>
             <br/>
-            MIT Licence 
+            MIT Licence
+            <br/>
             </div>
           </div>
         </md-sidenav>
 
-        <md-content flex id="main">
-          <md-toolbar class="navbar md-whiteframe-2dp">
-            <div class="md-toolbar-tools maintoolbar text-center" ng-class="{smallfont: !menuOpen}" layout="row">
-              <md-button class="md-icon-button" type="button" ng-click="toggleSidenav()">
-                <md-icon md-font-set="material-icons">menu</md-icon>
+        <md-toolbar class="navbar md-whiteframe-2dp" style="position: fixed;z-index: 2;">
+          <div class="md-toolbar-tools maintoolbar text-center" ng-class="{smallfont: !menuOpen}" layout="row">
+            <md-button class="md-icon-button" type="button" ng-click="toggleSidenav()">
+              <md-icon md-font-set="material-icons">menu</md-icon>
+            </md-button>
+            <h3 flex><a href="#/dashboard">Network : <b>{{network.difficulty | difficultyToHashRate | toHashRate}}</b></a></h3>
+            <h3 flex><a href="#/dashboard">Pool : <b>{{poolStats.global.hashRate | toHashRate}}</b></a></h3>
+            <h3 flex><a href="#/dashboard">You : <b>{{yourTotalHashRate | toHashRate}}</b></a></h3>
+            <div>
+              <md-button class="md-raised md-accent" aria-label="Miner Login" ng-click="minerLogin($event)" ng-if="!isLoggedIn()">
+                <md-icon class="login">fingerprint</md-icon>
+                Login
               </md-button>
-              <h3 flex><a href="#/dashboard">Network : <b>{{network.difficulty | difficultyToHashRate | toHashRate}}</b></a></h3>
-              <h3 flex><a href="#/dashboard">Pool : <b>{{poolStats.global.hashRate | toHashRate}}</b></a></h3>
-              <h3 flex><a href="#/dashboard">You : <b>{{yourTotalHashRate | toHashRate}}</b></a></h3>
-              <div>
-                <md-button class="md-raised md-accent" aria-label="Miner Login" ng-click="minerLogin($event)" ng-if="!isLoggedIn()">
-                  <md-icon class="login">fingerprint</md-icon>
-                  Login
-                </md-button>
-                <md-button class="md-fab md-mini md-warn" aria-label="Miner Login" ng-click="minerConsole($event)" ng-if="isLoggedIn()">
-                  <md-icon class="login">build</md-icon>
-                </md-button>
-              </div>
+              <md-button class="md-fab md-mini md-warn" aria-label="Miner Login" ng-click="minerConsole($event)" ng-if="isLoggedIn()">
+                <md-icon class="login">build</md-icon>
+              </md-button>
             </div>
-          </md-toolbar>
+          </div>
+        </md-toolbar>
+      <md-content flex id="main" style="margin-top: 64px !important;">
           <div id="content" ng-view flex></div>
         </md-content>
       </div>
