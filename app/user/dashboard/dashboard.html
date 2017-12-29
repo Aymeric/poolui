@@ -160,8 +160,8 @@
 						<h5> Hash Rate
 							<h2>
 								{{miner.hash | toHashRate}}
-								<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages['global']['1'] < miner.hash">trending_up</md-icon>									
-								<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages['global']['1'] > miner.hash">trending_down</md-icon>
+								<md-icon md-font-set="material-icons" style="color:green;" ng-if="minerStats[addr].workerAverages['global']['1'] < miner.hash">trending_up</md-icon>									
+								<md-icon md-font-set="material-icons" style="color:red;" ng-if="minerStats[addr].workerAverages['global']['1'] > miner.hash">trending_down</md-icon>
 								<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages['global']['1'] == miner.hash">trending_flat</md-icon>									
 								<!--
 									<h6>
@@ -208,7 +208,11 @@
 						<tbody md-body>
 							<tr md-row ng-repeat="(index, id) in addrStats[addr].ids" md-select="id" data-md-on-select="updateCharts" md-on-deselect="updateCharts">
 								<td md-cell><p class="md-body-2">{{id}}</p></td>
-								<td md-cell><p class="md-body-2">{{minerStats[addr].dataset[id][0].hs | toHashRate}}</p></td>
+								<td md-cell><p class="md-body-2">{{minerStats[addr].dataset[id][0].hs | toHashRate}}
+									<md-icon md-font-set="material-icons" style="color:green;" ng-if="minerStats[addr].workerAverages[id]['1'] < minerStats[addr].dataset[id][0].hs">trending_up</md-icon>									
+									<md-icon md-font-set="material-icons" style="color:red;" ng-if="minerStats[addr].workerAverages[id]['1'] > minerStats[addr].dataset[id][0].hs">trending_down</md-icon>
+									<md-icon md-font-set="material-icons" ng-if="minerStats[addr].workerAverages[id]['1'] == minerStats[addr].dataset[id][0].hs">trending_flat</md-icon>										
+								</p></td>
 								<td md-cell><p class="md-body-2">{{minerStats[addr].workerAverages[id]['1'] | toHashRate}}</p></td>
 								<td md-cell><p class="md-body-2">{{minerStats[addr].workerAverages[id]['4'] | toHashRate}}</p></td>
 								<td md-cell><p class="md-body-2">{{addrStats[addr].workerStats[id].totalHash | number}}</p></td>
