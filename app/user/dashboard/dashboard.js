@@ -91,6 +91,62 @@ app.controller('DashboardCtrl', function($scope , $route, $mdDialog, $pageVisibi
 		$scope.updateCharts();
 	};
 
+	function ticker() {
+        dataService.getData("/pool/chart/hashrate", function(data){
+
+            data = _.forEach(data, function(element) {
+                element.ts = new Date(element.ts);
+            });
+
+            $scope.poolHashrateChart = {
+                datasets: { global: data },
+                options: {
+                    series: [
+                        {"axis":"y","id":"global","dataset":"global","label":"Total Pool Hashrate","key":"hs","color":"green","type":["line","area"]}
+                    ],
+                    allSeries: [],
+                    axes: {
+                        x: {
+                            key: "ts",
+                            type: "date"
+                        },
+                        y: {
+                            min: 0
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function ticker2() {
+        dataService.getData("/pool/chart/miners", function(data){
+
+            data = _.forEach(data, function(element) {
+                element.ts = new Date(element.ts);
+            });
+
+            $scope.poolMinersChart = {
+                datasets: { global: data },
+                options: {
+                    series: [
+                        {"axis":"y","id":"global","dataset":"global","label":"Total Pool Miners","key":"cn","color":"green","type":["line","area"]}
+                    ],
+                    allSeries: [],
+                    axes: {
+                        x: {
+                            key: "ts",
+                            type: "date"
+                        },
+                        y: {
+                            min: 0
+                        }
+                    }
+                }
+            }
+        });
+    }
+
 	// No spawn xhr reqs in bg
 	$pageVisibility.$on('pageFocused', function(){
 		minerService.runService(true);
@@ -103,8 +159,16 @@ app.controller('DashboardCtrl', function($scope , $route, $mdDialog, $pageVisibi
 	// Register call with timer 
 	timerService.register(loadData, $route.current.controller);
 	loadData();
-	
+
+    timerService.register(ticker, 'poolHashrateChart');
+    ticker();
+
+    timerService.register(ticker2, 'poolMinersChart');
+    ticker2();
+
 	$scope.$on("$routeChangeStart", function () {
 		timerService.remove($route.current.controller);
+        timerService.remove("poolHashrateChart");
+        timerService.remove("poolMinersChart");
 	});
 });

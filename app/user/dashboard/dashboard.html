@@ -103,9 +103,35 @@
 							</div>
 						</div>
 					</md-tab>
-				</md-tabs>
+				</md-tabs>			   
 			</md-card-content>
 		</md-card>
+		<!--<md-card>
+			<md-card-content>-->
+				<div layout="column" layout-gt-sm="row" flex>
+					<md-card flex>
+						<md-card-title>
+							<span class="md-title">Pool Hashrate</span>
+						</md-card-title>
+						<md-card-content layout="column">
+							<div class="chartcontainer-pool" flex>
+								<linechart data="poolHashrateChart.datasets" options="poolHashrateChart.options"></linechart>
+							</div>
+						</md-card-content>
+					</md-card>
+					<md-card flex>
+						<md-card-title>
+							<span class="md-title">Pool Miners</span>
+						</md-card-title>
+						<md-card-content layout="column">
+							<div class="chartcontainer-pool" flex>
+								<linechart data="poolMinersChart.datasets" options="poolMinersChart.options"></linechart>
+							</div>
+						</md-card-content>
+					</md-card>
+				</div>				
+			<!--</md-card-content>
+		</md-card>-->
 	</div>
 </div>
 
