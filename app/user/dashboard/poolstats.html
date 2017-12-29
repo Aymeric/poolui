@@ -25,7 +25,7 @@
 					</md-card-title-media>
 					<md-card-title-text>
 						<div class="md-headline">
-							{{poolStats.global.totalBlocksFound}}
+							{{poolStats.global.totalBlocksFound | toNumberAbbreviated}}
 							<md-tooltip md-direction="bottom">
 								<span am-time-ago="poolStats.global.lastBlockFoundTime*1000"></span> at {{poolStats.global.lastBlockFoundTime*1000 | date:'hh:mm:ss dd/MM/yy'}}
 							</md-tooltip>								
@@ -50,7 +50,7 @@
 						</div>
 					</md-card-title-media>
 					<md-card-title-text>
-						<span class="md-headline">{{poolStats.global.miners}}</span>
+						<span class="md-headline">{{poolStats.global.miners | toNumberAbbreviated}}</span>
 						<span class="md-subhead">Miners Connected</span>
 					</md-card-title-text>
 				</md-card-title>
@@ -66,7 +66,7 @@
 					</md-card-title-media>
 					<md-card-title-text>
 						<span class="md-headline">
-							{{poolStats.global.totalMinersPaid}}
+							{{poolStats.global.totalMinersPaid | toNumberAbbreviated}}
 							<md-tooltip md-direction="bottom">
 								{{poolStats.global.totalPayments}} Payments
 							</md-tooltip>								

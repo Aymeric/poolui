@@ -11,18 +11,18 @@ angular.module('utils.strings', [])
 .filter('toNumberAbbreviated', function() {
   return function(hashes) {
     if (hashes > 1000000000000) {
-      return Math.floor(hashes / 1000000000000) + "." + (hashes % 1000000000000).toString().substring(0, 1) + " T"
+      return Math.floor(hashes / 1000000000000) + "." + (hashes % 1000000000000).toString().substring(0, 2) + " T"
     }
     if (hashes > 1000000000) {
-      return Math.floor(hashes / 1000000000) + "." + (hashes % 1000000000).toString().substring(0, 1) + " B"
+      return Math.floor(hashes / 1000000000) + "." + (hashes % 1000000000).toString().substring(0, 2) + " B"
     }
     if (hashes > 1000000) {
-      return Math.floor(hashes / 1000000) + "." + (hashes % 1000000).toString().substring(0, 1) + " M"
+      return Math.floor(hashes / 1000000) + "." + (hashes % 1000000).toString().substring(0, 2) + " M"
     }
     if (hashes > 1000) {
-      return Math.floor(hashes / 1000) + "." + (hashes % 1000).toString().substring(0, 1) + " K"
+      return Math.floor(hashes / 1000) + "." + (hashes % 1000).toString().substring(0, 2) + " K"
     }
-    return ( hashes || 0 ) + " H"
+    return ( hashes || 0 ) + " "
   };
 })
 
